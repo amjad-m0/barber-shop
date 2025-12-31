@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صالون الحلاقة الملكي - خدمات حلاقة احترافية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #dbeafe 100%);
+            color: #333;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(14, 165, 233, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.08) 0%, transparent 50%);
+            animation: gradientFloat 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Floating barber tools */
+        .floating-tools {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .tool {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.2;
+            animation: floatTool 15s ease-in-out infinite;
+        }
+
+        .tool:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; animation-duration: 12s; }
+        .tool:nth-child(2) { left: 80%; top: 15%; animation-delay: 2s; animation-duration: 15s; }
+        .tool:nth-child(3) { left: 20%; top: 60%; animation-delay: 4s; animation-duration: 18s; }
+        .tool:nth-child(4) { left: 70%; top: 70%; animation-delay: 1s; animation-duration: 14s; }
+        .tool:nth-child(5) { left: 50%; top: 40%; animation-delay: 3s; animation-duration: 16s; }
+        .tool:nth-child(6) { left: 15%; top: 80%; animation-delay: 5s; animation-duration: 13s; }
+        .tool:nth-child(7) { left: 85%; top: 45%; animation-delay: 2.5s; animation-duration: 17s; }
+        .tool:nth-child(8) { left: 40%; top: 10%; animation-delay: 4.5s; animation-duration: 15s; }
+
+        @keyframes floatTool {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(30px, -30px) rotate(90deg);
+            }
+            50% {
+                transform: translate(-20px, 20px) rotate(180deg);
+            }
+            75% {
+                transform: translate(40px, 10px) rotate(270deg);
+            }
+        }
+
+        @keyframes gradientFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+                opacity: 0.8;
+            }
+            66% {
+                transform: translate(-30px, 30px) scale(0.9);
+                opacity: 0.9;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #3b82f6 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5)); }
+            50% { filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.8)); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.8rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1e293b;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #0ea5e9);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%);
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '✂️';
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.05;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0deg);
+            animation: rotateIcon 20s linear infinite;
+        }
+
+
+        @keyframes rotateIcon {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .hero h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #3b82f6 0%, #0ea5e9 100%);
+            color: white;
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            animation: fadeInUp 1s ease 0.4s backwards, pulse 2s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.6);
+            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+        }
+        .video-background {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        z-index: 0;
+        }
+
+        .video-background video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+        opacity: 1;        /* الفيديو واضح */
+        filter: none;     /* مفيش blur */
+        }
+
+
+        /* Video Background
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            opacity: 0.2;
+            filter: blur(3px);
+        }
+
+        .video-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(27, 27, 27, 0.1);
+            z-index: 1;
+        } */
+
+        /* Services Section */
+        .services {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            animation: slideIn 1s ease;
+            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4));
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(240, 249, 255, 0.1) 100%);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.25);
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(219, 234, 254, 1) 100%);
+        }
+
+        .service-icon {
+            width: 100%;
+            height: 180px;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.05);
+        }
+
+        .service-card h3 {
+            color: #f1f1f1;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card p {
+            color: #eff2f5;
+            margin-bottom: 0;
+            position: relative;
+            z-index: 1;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Working Hours */
+        .working-hours {
+            background: linear-gradient(135deg, #0c4a6e 0%, #075985 50%, #0369a1 100%);
+            color: white;
+            padding: 3rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .working-hours::before {
+            content: '⏰';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.03;
+            top: 50%;
+            right: -5%;
+            transform: translateY(-50%) rotate(-15deg);
+            animation: rotateSlowly 30s linear infinite;
+        }
+
+        @keyframes rotateSlowly {
+            from { transform: translateY(-50%) rotate(-15deg); }
+            to { transform: translateY(-50%) rotate(345deg); }
+        }
+
+        .hours-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .hour-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .hour-item:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .hour-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.1);
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            animation: bounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4));
+            color: #3b82f6;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .contact-link {
+            color: #1e40af;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            word-break: break-word;
+        }
+
+        .contact-link::before {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #0ea5e9);
+            transition: width 0.3s;
+        }
+
+        .contact-link:hover {
+            color: #3b82f6;
+            transform: scale(1.05);
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+
+        .contact-link:hover::before {
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hide video on mobile for performance */
+@media (max-width: 767px) {
+
+  .video-background {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .video-background video {
+    position: relative;        /* 🔥 مهم */
+    top: auto;
+    left: auto;
+    transform: none;           /* 🔥 مهم */
+    width: 100%;
+    height: 33.333%;
+    object-fit: cover;
+  }
+}
+
+
+        /* Tablet - 768px and up */
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 1rem;
+            }
+
+            .hero {
+                padding: 5rem 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .cta-button {
+                padding: 1rem 2.5rem;
+                font-size: 1.1rem;
+            }
+
+            .services {
+                padding: 4rem 2rem;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+                margin-top: 3rem;
+            }
+
+            .service-card {
+                padding: 2rem;
+            }
+
+            .service-icon {
+                height: 200px;
+                margin-bottom: 1.5rem;
+            }
+
+            .service-card h3 {
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+            }
+
+            .service-card p {
+                font-size: 1rem;
+            }
+
+            .working-hours {
+                padding: 4rem 2rem;
+            }
+
+            .hours-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+                margin-top: 3rem;
+            }
+
+            .contact {
+                padding: 4rem 2rem;
+            }
+
+            .contact-info {
+                gap: 2rem;
+            }
+
+            .contact-icon {
+                font-size: 2.5rem;
+            }
+
+            .contact-link {
+                font-size: 1.2rem;
+            }
+
+            .tool {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Desktop - 1024px and up */
+        @media (min-width: 1024px) {
+            .hero {
+                padding: 6rem 2rem;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero p {
+                font-size: 1.3rem;
+            }
+
+            .hero::before {
+                font-size: 15rem;
+            }
+
+            .services {
+                padding: 5rem 2rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .service-card:hover {
+                transform: translateY(-15px) rotate(2deg);
+            }
+
+            .working-hours {
+                padding: 5rem 2rem;
+            }
+
+            .contact {
+                padding: 5rem 2rem;
+            }
+
+            .contact-info {
+                gap: 3rem;
+            }
+
+            .nav-links {
+                gap: 2rem;
+            }
+
+            .tool {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating barber tools -->
+    <div class="floating-tools">
+        <div class="tool">✂️</div>
+        <div class="tool">💈</div>
+        <div class="tool">🪒</div>
+        <div class="tool">✂️</div>
+        <div class="tool">💇</div>
+        <div class="tool">🪮</div>
+        <div class="tool">💈</div>
+        <div class="tool">✂️</div>
+    </div>
+
+    <header>
+        <nav class="container">
+            <div class="logo">💈 صالون ابداعات أحمد</div>
+            <ul class="nav-links">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#services">الخدمات</a></li>
+                <li><a href="#hours">المواعيد</a></li>
+                <li><a href="#contact">اتصل بنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h3>مرحباً بك في</h3>
+            <h1>صالون ابداعات احمد</h1>
+            <p>أفضل خدمات الحلاقة والعناية بالشعر واللحية في المدينة</p>
+            <p>حلاق مصري يقدم لك تجربة حلاقة لا تُنسى بأيدي أمهر الحلاقين</p>
+            <button class="cta-button" onclick="scrollToSection('contact')">للتواصل </button>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="video-background">
+            <video autoplay loop muted playsinline>
+                <source src="./videos/1.mp4" type="video/mp4">
+            </video>
+            <video autoplay muted loop playsinline>
+                <source src="./videos/2.mp4" type="video/mp4">
+            </video>
+            <video autoplay muted loop playsinline>
+                <source src="./videos/3.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="container">
+            <h2 class="section-title">خدماتنا المميزة</h2>
+            <div class="services-grid">
+                <div class="service-card" onclick="selectService(this, 'قصة شعر كلاسيكية')">
+                    <div class="service-icon">
+                        <img src="./pictures/3.jpg" alt="قصات شعر" style="width: 100%; height: 100%; border-radius: 15px; object-fit: cover;">
+                    </div>
+                    <h3>قصات شعر</h3>
+                    <p>قصة شعر احترافية بأحدث الأساليب العصرية والأدوات الحديثة</p>
+                </div>
+
+                <div class="service-card" onclick="selectService(this, 'تشذيب اللحية')">
+                    <div class="service-icon">
+                        <img src="./pictures/6.jpg" alt="تشذيب اللحية" style="width: 100%; height: 100%; border-radius: 15px; object-fit: cover;">
+                    </div>
+                    <h3>تشذيب اللحية وصبغات الشعر والذقن</h3>
+                    <p>عناية كاملة باللحية مع التشكيل والترتيب بأدوات متطورة</p>
+                </div>
+
+                <div class="service-card" onclick="selectService(this, 'حلاقة ملكية')">
+                    <div class="service-icon">
+                        <img src="./pictures/2.jpg" alt="الصنفرة والماسكات" style="width: 100%; height: 100%; border-radius: 15px; object-fit: cover;">
+                    </div>
+                    <h3>جميع انواع الصنفرة وماسكات العناية بالوجه</h3>
+                </div>
+
+                <div class="service-card" onclick="selectService(this, 'صبغة شعر')">
+                    <div class="service-icon">
+                        <img src="./pictures/4.jpg" alt="تنظيف بشرة" style="width: 100%; height: 100%; border-radius: 15px; object-fit: cover;">
+                    </div>
+                    <h3>تنظيف بشره ولاصقة خشم</h3>
+                </div>
+
+                <div class="service-card" onclick="selectService(this, 'تدليك فروة الرأس')">
+                    <div class="service-icon">
+                        <img src="./pictures/5.jpg" alt="جهاز بخار" style="width: 100%; height: 100%; border-radius: 15px; object-fit: cover;">
+                    </div>
+                    <h3>جهاز بخار للعناية بالوجه</h3>
+                </div>
+
+                <div class="service-card" onclick="selectService(this, 'حلاقة الأطفال')">
+                    <div class="service-icon">
+                        <img src="./pictures/1.jpg" alt="كرسي مساج" style="width: 100%; height: 100%; border-radius: 15px; object-fit: cover;">
+                    </div>
+                    <h3>كرسي مساج</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="hours" class="working-hours">
+        <div class="container">
+            <div class="hours-content">
+                <h2 class="section-title" style="color: white;">مواعيد العمل</h2>
+                <div class="hours-grid">
+                    <div class="hour-item">
+                        <h4>يوميا</h4>
+                        <p>11:00 صباحاً - 11:00 مساءً</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">تواصل معنا</h2>
+            <p style="font-size: 1.1rem; color: #475569; margin-bottom: 2rem;">نحن هنا لخدمتك، تواصل معنا الآن</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <a href="tel:+966538700534" class="contact-link">0538700534</a>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">🌍</div>
+                    <a href="https://maps.google.com" target="_blank" class="contact-link">تربة، محافظة حائل</a>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                    <a href="https://wa.me/+966538700534" target="_blank" class="contact-link">واتساب</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 الصالون الملكي. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+    <script>
+        // Smooth scrolling
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Service selection with animation
+        function selectService(card, serviceName) {
+            // Remove previous selection
+            document.querySelectorAll('.service-card').forEach(c => {
+                c.style.borderColor = 'rgba(59, 130, 246, 0.2)';
+            });
+
+            // Highlight selected card
+            card.style.borderColor = '#3b82f6';
+
+            // Show confirmation message
+            const message = document.createElement('div');
+            message.textContent = `تم اختيار: ${serviceName}`;
+            message.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+                color: white;
+                padding: 2rem 3rem;
+                border-radius: 20px;
+                font-size: 1.3rem;
+                font-weight: bold;
+                z-index: 10000;
+                box-shadow: 0 20px 60px rgba(59, 130, 246, 0.5);
+                animation: fadeInUp 0.5s ease;
+                border: 2px solid rgba(255, 255, 255, 0.3);
+            `;
+
+            document.body.appendChild(message);
+
+            setTimeout(() => {
+                message.style.opacity = '0';
+                message.style.transform = 'translate(-50%, -50%) translateY(-20px)';
+                message.style.transition = 'all 0.5s ease';
+                setTimeout(() => message.remove(), 500);
+            }, 2000);
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('header');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(255, 255, 255, 0.98)';
+                nav.style.boxShadow = '0 6px 25px rgba(59, 130, 246, 0.2)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = '0 4px 20px rgba(59, 130, 246, 0.15)';
+            }
+        });
+
+        // Animate service cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.service-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.animationDelay = `${index * 0.1}s`;
+            observer.observe(card);
+        });
+    </script>
